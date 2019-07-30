@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Mostly harmless since 1977">
+
+
+    <meta property="twitter:site" content="@ryantiffany">
+
+<meta property="og:site_name" content="Cloud Design Dev" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cloud-design.dev/post/testing/" />
+<meta property="og:title" content="Testing" />
+<meta property="twitter:title" content="Testing">
+
+    <meta property="og:image" content="https://cloud-design.dev/img/banner.png">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:image" content="https://cloud-design.dev/img/banner.png">
+
+<meta property="og:description" content="">
+<meta property="twitter:description" content="">
+
+<title>
+
+
+     Cloud Design Dev - Testing 
+
+</title>
+<link rel="canonical" href="https://cloud-design.dev/post/testing/">
+
+
+<style media="screen">
+  @font-face {
+  font-family: 'Nexa Bold';
+  src: url('https://cloud-design.dev/fonts/Nexa Bold.otf');
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, div.column {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+a,
+a:visited,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+html {
+  height: 100%;
+  font-size: 16px;
+}
+body {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 100%;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: #111111;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility !important;
+}
+.icon {
+  text-rendering: geometricPrecision !important;
+}
+section {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+div.column {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+.container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  width: 100%;
+}
+div.header .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.header .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.header .container .logo {
+  
+  max-width: 100px;
+  
+  margin-left: -2em;
+}
+div.header .name {
+  padding-top: 20px;
+  font-size: 28px;
+  font-family: 'Nexa Bold', 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  
+  text-transform: uppercase;
+  
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+}
+div.header nav {
+  margin-bottom: 16px;
+}
+div.header nav ul {
+  list-style: none;
+  text-align: center;
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: -ms-inline-flexbox;
+  display: -ms-inline-flex;
+  display: inline-flex;
+}
+div.header nav ul li {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+div.header nav ul li:first-child {
+  margin-left: 0;
+}
+div.header nav ul li:last-child {
+  margin-right: 0;
+}
+div.header nav ul a {
+  color: #555555;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.header nav ul a:hover {
+  color: #111111;
+}
+div.footer .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+  width: 100%;
+  text-align: center;
+}
+div.footer .container a {
+  font-size: 14px;
+  margin-left: 6px;
+  margin-right: 6px;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.footer .container a:first-child {
+  margin-left: 0;
+}
+div.footer .container a:last-child {
+  margin-right: 0;
+}
+div.footer .container a:hover {
+  opacity: 0.8;
+}
+div.footer .container a .icon {
+  width: 16px;
+  height: 16px;
+}
+div.footer .container .copyright {
+  flex-grow: 0.5;
+  text-align: start;
+}
+div.footer .container .icons {
+  flex-grow: 0.5;
+  text-align: end;
+}
+div.main .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+}
+div.main .content {
+  color: #111111;
+  font-size: 16px;
+}
+div.main .content .title-container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+}
+div.main .content .posts {
+  
+  
+}
+div.main .content .page-heading {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  text-transform: uppercase;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  margin-bottom: 16px;
+}
+div.main .content .front-matter .page-heading {
+  margin-bottom: 0;
+}
+div.main .content .front-matter .meta {
+  font-size: 14px;
+  color: #666666;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  margin-bottom: 32px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+  display: none;
+}
+div.main .content .front-matter .middot:before {
+  font-size: 6px;
+  margin: 0 6px;
+  vertical-align: middle;
+  content: "•";
+}
+div.main .content .front-matter .tags ul {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .content .front-matter .tags ul li {
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.main .content .front-matter .tags ul li:hover {
+  opacity: 0.7;
+}
+div.main .content .front-matter .tags ul li a {
+  color: #666666;
+}
+
+div.main .container.f04 {
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.main .container.f04 .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .container.f04 .content .num {
+  margin: 30px 0px 30px 0;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: 50px;
+}
+div.main .container.f04 .content .detail {
+  margin-bottom: 40px;
+}
+div.main .container .content .groupby {
+  margin-top: 1em;
+  padding-left: 0.5em;
+}
+div.main .container .content .post-item {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  display: list-item;
+  list-style: disc inside;
+}
+div.main .container .content .post-item .meta {
+  font-size: 14px;
+  color: #666666;
+  display: none;
+  min-width: 100px;
+}
+div.main .container .content .see-more {
+  font-style: italic;
+  float: right;
+  font-size: 0.9em;
+  margin-top: 2em;
+  color: #313537;
+}
+div.main .container .content .see-more:hover {
+  color: #666;
+}
+section {
+  padding: 0 16px;
+}
+div.column {
+  padding: 0 16px;
+}
+div.header {
+  padding-top: 10px;
+}
+div.header-home {
+  padding-top: 36px;
+}
+div.main {
+  padding-top: 32px;
+}
+div.main .container .content .post-item .meta {
+    display: block;
+}
+div.main .container .content .post-item {
+    display: flex;
+    list-style: none;
+}
+a {
+  color: #428bca;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+a:hover {
+  color: #2a6496;
+}
+img {
+  max-width: 100%;
+}
+div.main .content {
+    width: 100%;
+}
+div.main .content .markdown {
+  font-size: 1.1em;
+  line-height: 1.75em;
+  color: #313537;
+  font-family: serif;
+  font-weight: 300;
+}
+div.main .content .markdown h1,
+div.main .content .markdown h2,
+div.main .content .markdown h3,
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 22px;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  text-transform: none;
+  margin-top: 1.75rem;
+}
+div.main .content .markdown h1 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+div.main .content .markdown h3 {
+  font-size: 1em;
+  margin-bottom: 1rem;
+}
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: none;
+}
+div.main .content .markdown code,
+div.main .content .markdown pre {
+  font-family: 'Menlo', monospace;
+  font-size: 0.98rem;
+  background-color: #f7f7f7;
+}
+div.main .content .markdown code {
+  /* enclosed by single backtick (`) */
+  padding: .15em .5em;
+  border-radius: 2px;
+}
+div.main .content .markdown pre {
+  /* Hugo specific: consider using the 'highlight' shortcode */
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  line-height: 1.5em;
+  white-space: pre;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+div.main .content .markdown pre code {
+  /* enclosed by 4 backticks (````) */
+  padding: 0;
+  font-size: 0.9rem;
+}
+div.main .content .markdown a code {
+  color: #428bca !important;
+}
+div.main .content .markdown a code:hover {
+  text-decoration: underline;
+}
+div.main .content .markdown p {
+  
+  text-align: justify;
+  
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+div.main .content .markdown ul,
+div.main .content .markdown ol,
+div.main .content .markdown dl {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown dt {
+  font-weight: bold;
+}
+div.main .content .markdown dd {
+  margin-bottom: .5rem;
+}
+div.main .content .markdown ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown ol {
+  list-style-type: decimal;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown li {
+  margin-left: 2em;
+}
+div.main .content .markdown em {
+  font-style: italic;
+}
+div.main .content .markdown strong {
+  font-weight: 700;
+}
+div.main .content .markdown hr {
+  position: relative;
+  margin: 1.75rem 0;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-top: 1px solid #999999;
+}
+div.main .content .markdown abbr {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #666666;
+  text-transform: uppercase;
+}
+div.main .content .markdown abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted #808080;
+}
+div.main .content .markdown blockquote {
+  padding: .5rem 1rem;
+  margin: .8rem 0;
+  color: #7a7a7a;
+  border-left: .25rem solid #e5e5e5;
+}
+div.main .content .markdown blockquote p:last-child {
+  margin-bottom: 0;
+}
+div.main .content .markdown figure {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 1em;
+}
+div.main .content .markdown figure img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  position: static;
+  margin: auto;
+}
+div.main .content .markdown table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+div.main .content .markdown td,
+div.main .content .markdown th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+div.main .content .markdown tbody tr:nth-child(odd) td,
+div.main .content .markdown tbody tr:nth-child(odd) th {
+  background-color: #f7f7f7;
+}
+div.main .content .markdown .footnotes ol {
+  list-style-type: decimal;
+  margin-left: 16px;
+}
+div.main .content .markdown .footnotes li {
+  list-style-type: unset;
+}
+div.main .content .markdown .footnote-ref {
+  font-size: 0.7em;
+}
+div.main .content .navigation {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  padding: 2em;
+}
+div.main .content .navigation div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  margin-top: 1em;
+}
+div.main .content .navigation .icon {
+  width: 16px;
+  height: 16px;
+}
+div.main .content .navigation a {
+  width: 250px;
+  margin: 0 1em;
+  text-align: center;
+  font-style: italic;
+  color: #313537;
+}
+div.main .content .share, div.main .content .share div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+div.main .content .share {
+  background-color: rgba(152, 152, 152, 0.07);
+  padding: 1em 0;
+}
+div.main .content .share a {
+  margin: 0 6px;
+}
+kbd {
+  padding: 0.1em 0.6em;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0.1em;
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Fonts */
+
+
+.wf-raleway-n4-active body, 
+.wf-raleway-n4-active div.header nav ul a,
+.wf-raleway-n7-active div.main .content .page-heading,
+.wf-raleway-n2-active div.main .container.f04 .content .num,
+.wf-raleway-n7-active div.main .content .markdown h1,
+.wf-raleway-n7-active div.main .content .markdown h2,
+.wf-raleway-n7-active div.main .content .markdown h3,
+.wf-raleway-n7-active div.main .content .markdown h4,
+.wf-raleway-n7-active div.main .content .markdown h5,
+.wf-raleway-n7-active div.main .content .markdown h6 {
+      font-family: 'Raleway';
+}
+
+.wf-merriweather-n3-active div.main .content .markdown {
+      font-family: 'Merriweather';
+}
+
+.wf-ubuntu-mono-n4-active div.main .content .markdown code,
+.wf-ubuntu-mono-n4-active div.main .content .markdown pre {
+      font-family: 'Ubuntu Mono';
+}
+
+
+</style>
+<style media="(min-width: 600px)">
+  body {
+-webkit-justify-content: center;
+-moz-justify-content: center;
+-ms-justify-content: center;
+justify-content: center;
+}
+.non-narrow.zero-top-spacing {
+padding-top: 0 !important;
+}
+section {
+padding: 0 16px;
+margin-left: 100px;
+margin-right: 100px;
+
+max-width: 750px;
+
+}
+div.column {
+padding: 0 16px;
+
+max-width: 750px;
+
+}
+div.header {
+background-color: transparent;
+}
+div.header .container {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.header .container .logo {
+margin: 0;
+}
+div.header-home .container .logo {
+max-width: 216px;
+margin-left: 24px;
+}
+div.header-home .name-home {
+padding-top: 30px;
+font-size: 40px;
+}
+div.header-home nav ul a {
+font-size: 18px;
+}
+div.header .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.header .name {
+color: #333333;
+}
+div.header nav {
+font-size: 14px;
+margin-bottom: 0;
+}
+div.header nav ul {
+text-align: left;
+}
+div.header nav ul a {
+color: #666666;
+}
+div.header nav ul a:hover {
+color: #333333;
+}
+div.footer {
+background-color: transparent;
+}
+div.footer .container {
+flex-direction: row;
+}
+div.footer .container a {
+margin-left: 3px;
+margin-right: 3px;
+color: #666666;
+}
+div.footer .container a:hover {
+color: #333333;
+}
+div.footer .container a .icon {
+font-size: 18px;
+}
+div.footer .container a .icon.larger {
+font-size: 20px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+display: initial;
+}
+div.main .container.f04 {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.main .container.f04 .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.main .container.f04 .content .num {
+margin: 0 0 10px 0;
+font-size: 32px;
+}
+div.main .container.f04 .content .detail {
+margin-bottom: 30px;
+}
+.container {
+padding: 0 30px;
+}
+div.header {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.footer {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.main {
+padding-top: 0;
+}
+div.main .content {
+  
+  font-size: 16px;
+  
+}
+div.main .container .content .post-item {
+display: flex;
+list-style: none;
+padding-left: 1.5em;
+}
+div.main .container .content .post-item .meta {
+display: block;
+}
+div.main .content .markdown blockquote {
+padding-right: 5rem;
+padding-left: 1.25rem;
+}
+div.main .content .navigation {
+-webkit-flex-direction: row;
+-moz-flex-direction: row;
+-ms-flex-direction: row;
+flex-direction: row;
+}
+div.main .content .navigation div {
+margin-top: 0em;
+}
+
+</style>
+<style media="(min-width: 769px)">
+  div.main .content .markdown figure {
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown img {
+max-width: 110%;
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown pre {
+width: 110%;
+margin-left: -4%;
+}
+
+</style>
+
+<noscript>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">
+</noscript>
+
+
+  <style type="text/css" media="screen">
+    .hljs{display:block;background:white;padding:0.5em;color:#333333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-string,.hljs-variable,.hljs-template-variable,.hljs-strong,.hljs-emphasis,.hljs-quote{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-literal,.hljs-symbol,.hljs-bullet,.hljs-attribute{color:#0086b3}.hljs-section,.hljs-name{color:#63a35c}.hljs-tag{color:#333333}.hljs-title,.hljs-attr,.hljs-selector-id,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);animation:a .5s both}@keyframes a{0%{filter:blur(20px)}to{filter:blur(0)}}
+
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    /*!
+ * Social Share Kit v1.0.7 (http://socialsharekit.com)
+ * Copyright 2015 Social Share Kit / Kaspars Sprogis.
+ * Licensed under Creative Commons Attribution-NonCommercial 3.0 license:
+ * https://github.com/darklow/social-share-kit/blob/master/LICENSE
+ * ---
+ */@font-face{font-family:'social-share-kit';src:url('https://cloud-design.dev/fonts/social-share-kit.eot');src:url('https://cloud-design.dev/fonts/social-share-kit.eot?#iefix') format('embedded-opentype'),url('https://cloud-design.dev/fonts/social-share-kit.woff') format('woff'),url('https://cloud-design.dev/fonts/social-share-kit.ttf') format('truetype'),url('https://cloud-design.dev/fonts/social-share-kit.svg#social-share-kit') format('svg');font-weight:normal;font-style:normal}.ssk:before{display:inline-block;font-family:"social-share-kit" !important;font-style:normal !important;font-weight:normal !important;font-variant:normal !important;text-transform:none !important;speak:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.ssk-facebook:before{content:"a";text-indent:4px;margin-right:-4px}.ssk-twitter:before{content:"b"}.ssk-google-plus:before{content:"v"}.ssk-google-plus-old:before{content:"c"}.ssk-email:before{content:"d";top:-1px;position:relative}.ssk-pinterest:before{content:"e"}.ssk-tumblr:before{content:"f"}.ssk-linkedin:before{content:"g"}.ssk-github:before{content:"h"}.ssk-vk:before{content:"i"}.ssk-instagram:before{content:"j"}.ssk-amazon:before{content:"k"}.ssk-skype:before{content:"s"}.ssk-youtube:before{content:"x"}.ssk-vimeo:before{content:"u"}.ssk-ebay:before{content:"p"}.ssk-apple:before{content:"l"}.ssk-behance:before{content:"q"}.ssk-dribble:before{content:"n"}.ssk-android:before{content:"o"}.ssk-whatsapp:before{content:"m"}.ssk-reddit:before{content:"r"}.ssk-reddit2:before{content:"t"}.ssk-link:before{content:"w"}.ssk{background-color:#757575;color:white;display:inline-block;font-size:22px;line-height:1px;margin-right:2px;margin-bottom:2px;padding:7px;text-align:center;text-decoration:none;transition:background-color .1s;-webkit-transition:background-color .1s;-moz-transition:background-color .1s;-ms-transition:background-color .1s;-o-transition:background-color .1s}.ssk:before,.ssk .glyphicon,.ssk .fa{position:relative;font-size:22px;top:0;vertical-align:middle}.ssk.ssk-xs,.ssk-xs>.ssk{padding:4px}.ssk.ssk-xs:before,.ssk-xs>.ssk:before,.ssk.ssk-xs .glyphicon,.ssk-xs>.ssk .glyphicon,.ssk.ssk-xs .fa,.ssk-xs>.ssk .fa{font-size:15px}.ssk.ssk-sm,.ssk-sm>.ssk{padding:5px}.ssk.ssk-sm:before,.ssk-sm>.ssk:before,.ssk.ssk-sm .glyphicon,.ssk-sm>.ssk .glyphicon,.ssk.ssk-sm .fa,.ssk-sm>.ssk .fa{font-size:20px}.ssk.ssk-lg,.ssk-lg>.ssk{padding:9px}.ssk.ssk-lg:before,.ssk-lg>.ssk:before,.ssk.ssk-lg .glyphicon,.ssk-lg>.ssk .glyphicon,.ssk.ssk-lg .fa,.ssk-lg>.ssk .fa{font-size:28px}.ssk:last-child{margin-right:0}.ssk:hover{background-color:#424242}.ssk:hover,.ssk:focus{color:#fff;text-decoration:none}.ssk.ssk-round,.ssk-round .ssk{border-radius:50%}.ssk.ssk-round:before,.ssk-round .ssk:before{text-indent:0;margin-right:0}.ssk.ssk-rounded,.ssk-rounded .ssk{border-radius:15%}.ssk.ssk-icon{color:#757575;padding:2px;font-size:24px}.ssk.ssk-icon,.ssk.ssk-icon:hover{background-color:transparent}.ssk.ssk-icon:hover{color:#424242}.ssk.ssk-icon.ssk-xs,.ssk-xs>.ssk.ssk-icon{font-size:16px}.ssk.ssk-icon.ssk-sm,.ssk-sm>.ssk.ssk-icon{font-size:20px}.ssk.ssk-icon.ssk-lg,.ssk-lg>.ssk.ssk-icon{font-size:28px}.ssk.ssk-text{overflow:hidden;font-size:17px;line-height:normal;padding-right:10px}.ssk.ssk-text:before,.ssk.ssk-text .glyphicon,.ssk.ssk-text .fa{margin:-7px 10px -7px -7px;padding:7px;background-color:rgba(0,0,0,0.15);vertical-align:bottom;text-indent:0}.ssk-block .ssk.ssk-text{display:block;margin-right:0;text-align:left}.ssk.ssk-text.ssk-xs,.ssk-xs>.ssk.ssk-text{font-size:12px;padding-right:6px}.ssk.ssk-text.ssk-xs:before,.ssk-xs>.ssk.ssk-text:before,.ssk.ssk-text.ssk-xs .glyphicon,.ssk-xs>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-xs .fa,.ssk-xs>.ssk.ssk-text .fa{margin:-4px 6px -4px -4px;padding:4px}.ssk.ssk-text.ssk-sm,.ssk-sm>.ssk.ssk-text{font-size:16px;padding-right:7px}.ssk.ssk-text.ssk-sm:before,.ssk-sm>.ssk.ssk-text:before,.ssk.ssk-text.ssk-sm .glyphicon,.ssk-sm>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-sm .fa,.ssk-sm>.ssk.ssk-text .fa{margin:-5px 7px -5px -5px;padding:5px}.ssk.ssk-text.ssk-lg,.ssk-lg>.ssk.ssk-text{font-size:22px;padding-right:13px}.ssk.ssk-text.ssk-lg:before,.ssk-lg>.ssk.ssk-text:before,.ssk.ssk-text.ssk-lg .glyphicon,.ssk-lg>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-lg .fa,.ssk-lg>.ssk.ssk-text .fa{margin:-9px 13px -9px -9px;padding:9px}.ssk-group,.ssk-sticky{font-size:0}.ssk-sticky{top:0;position:fixed;z-index:2000}.ssk-sticky .ssk{transition:padding .1s ease-out;-webkit-transition:padding .1s ease-out;-moz-transition:padding .1s ease-out;-ms-transition:padding .1s ease-out;-o-transition:padding .1s ease-out;margin:0}@media (min-width:768px){.ssk-sticky.ssk-left .ssk,.ssk-sticky.ssk-right .ssk{display:block;clear:both}.ssk-sticky.ssk-left.ssk-center,.ssk-sticky.ssk-right.ssk-center{top:50%;transform:translateY(-50%);-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);-ms-transform:translateY(-50%);-o-transform:translateY(-50%)}.ssk-sticky.ssk-left{left:0}.ssk-sticky.ssk-left .ssk{float:left}.ssk-sticky.ssk-left .ssk:hover{padding-left:15px}.ssk-sticky.ssk-right{right:0}.ssk-sticky.ssk-right .ssk{float:right}.ssk-sticky.ssk-right .ssk:hover{padding-right:15px}}.ssk-sticky.ssk-bottom{font-size:0;top:auto;bottom:0}.ssk-sticky.ssk-bottom.ssk-center{left:50%;right:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-moz-transform:translateX(-50%);-ms-transform:translateX(-50%);-o-transform:translateX(-50%)}.ssk-sticky.ssk-bottom .ssk{vertical-align:bottom}.ssk-sticky.ssk-bottom .ssk:hover{padding-bottom:15px}.ssk-sticky.ssk-round.ssk-xs .ssk:hover{padding:8px}.ssk-sticky.ssk-round.ssk-sm .ssk:hover{padding:9px}.ssk-sticky.ssk-round .ssk:hover{padding:11px}.ssk-sticky.ssk-round.ssk-lg .ssk:hover{padding:13px}@media (max-width:767px){.ssk-sticky{left:0;right:0;bottom:0;top:auto;width:100%;display:flex !important;flex-direction:row;flex-wrap:nowrap}.ssk-sticky.ssk-sticky-hide-xs{display:none !important}.ssk-sticky .ssk{flex:1;width:auto}.ssk-sticky .ssk .ssk-num{display:none}}.ssk-count{padding-top:20px}.ssk-count .ssk{position:relative}.ssk-count .ssk-num{border-radius:4px;color:#8f8f8f;background-color:rgba(50,50,50,0.03);display:block;font-size:12px;left:0;line-height:20px;position:absolute;right:0;text-align:center;top:-20px}@media (min-width:768px){.ssk-count.ssk-sticky{padding-top:0}.ssk-count.ssk-sticky.ssk-left .ssk-num,.ssk-count.ssk-sticky.ssk-right .ssk-num{top:20%;background-color:transparent}.ssk-count.ssk-sticky.ssk-left .ssk-num{left:100%;margin-left:5px}.ssk-count.ssk-sticky.ssk-right .ssk-num{right:115%;margin-left:-100%;text-align:right}}.ssk-facebook{background-color:#3B5998}.ssk-grayscale>.ssk-facebook{background-color:#757575}.ssk-facebook:hover{background-color:#2d4373}.ssk-facebook:hover{background-color:#2d4373}.ssk-grayscale>.ssk-facebook:hover{background-color:#3B5998}.ssk-facebook.ssk-icon{color:#3B5998}.ssk-facebook.ssk-icon:hover{color:#2d4373}.ssk-facebook.ssk-icon:before{text-indent:0;margin-right:0}.ssk-twitter{background-color:#1DA1F2}.ssk-grayscale>.ssk-twitter{background-color:#757575}.ssk-twitter:hover{background-color:#0c85d0}.ssk-twitter:hover{background-color:#0c85d0}.ssk-grayscale>.ssk-twitter:hover{background-color:#1DA1F2}.ssk-twitter.ssk-icon{color:#1DA1F2}.ssk-twitter.ssk-icon:hover{color:#0c85d0}.ssk-google-plus{background-color:#EA4335}.ssk-grayscale>.ssk-google-plus{background-color:#757575}.ssk-google-plus:hover{background-color:#d62516}.ssk-google-plus:hover{background-color:#d62516}.ssk-grayscale>.ssk-google-plus:hover{background-color:#EA4335}.ssk-google-plus.ssk-icon{color:#EA4335}.ssk-google-plus.ssk-icon:hover{color:#d62516}.ssk-pinterest{background-color:#BD081C}.ssk-grayscale>.ssk-pinterest{background-color:#757575}.ssk-pinterest:hover{background-color:#8c0615}.ssk-pinterest:hover{background-color:#8c0615}.ssk-grayscale>.ssk-pinterest:hover{background-color:#BD081C}.ssk-pinterest.ssk-icon{color:#BD081C}.ssk-pinterest.ssk-icon:hover{color:#8c0615}.ssk-tumblr{background-color:#395773}.ssk-grayscale>.ssk-tumblr{background-color:#757575}.ssk-tumblr:hover{background-color:#283d51}.ssk-tumblr:hover{background-color:#283d51}.ssk-grayscale>.ssk-tumblr:hover{background-color:#395773}.ssk-tumblr.ssk-icon{color:#395773}.ssk-tumblr.ssk-icon:hover{color:#283d51}.ssk-email{background-color:#757575}.ssk-grayscale>.ssk-email{background-color:#757575}.ssk-email:hover{background-color:#5b5b5b}.ssk-email:hover{background-color:#5b5b5b}.ssk-grayscale>.ssk-email:hover{background-color:#757575}.ssk-grayscale>.ssk-email:hover{background-color:#5b5b5b}.ssk-email.ssk-icon{color:#757575}.ssk-email.ssk-icon:hover{color:#5b5b5b}.ssk-vk{background-color:#54769a}.ssk-grayscale>.ssk-vk{background-color:#757575}.ssk-vk:hover{background-color:#425d79}.ssk-vk:hover{background-color:#425d79}.ssk-grayscale>.ssk-vk:hover{background-color:#54769a}.ssk-vk.ssk-icon{color:#54769a}.ssk-vk.ssk-icon:hover{color:#425d79}.ssk-linkedin{background-color:#1c87bd}.ssk-grayscale>.ssk-linkedin{background-color:#757575}.ssk-linkedin:hover{background-color:#156791}.ssk-linkedin:hover{background-color:#156791}.ssk-grayscale>.ssk-linkedin:hover{background-color:#1c87bd}.ssk-linkedin.ssk-icon{color:#1c87bd}.ssk-linkedin.ssk-icon:hover{color:#156791}.ssk-whatsapp{background-color:#34AF23}.ssk-grayscale>.ssk-whatsapp{background-color:#757575}.ssk-whatsapp:hover{background-color:#27851a}.ssk-whatsapp:hover{background-color:#27851a}.ssk-grayscale>.ssk-whatsapp:hover{background-color:#34AF23}.ssk-whatsapp.ssk-icon{color:#34AF23}.ssk-whatsapp.ssk-icon:hover{color:#27851a}.ssk-reddit{background-color:#5f99cf}.ssk-grayscale>.ssk-reddit{background-color:#757575}.ssk-reddit:hover{background-color:#3a80c1}.ssk-reddit:hover{background-color:#3a80c1}.ssk-grayscale>.ssk-reddit:hover{background-color:#5f99cf}.ssk-reddit.ssk-icon{color:#5f99cf}.ssk-reddit.ssk-icon:hover{color:#3a80c1}.ssk-reddit2{background-color:#5f99cf}.ssk-grayscale>.ssk-reddit2{background-color:#757575}.ssk-reddit2:hover{background-color:#3a80c1}.ssk-reddit2:hover{background-color:#3a80c1}.ssk-grayscale>.ssk-reddit2:hover{background-color:#5f99cf}.ssk-reddit2.ssk-icon{color:#5f99cf}.ssk-reddit2.ssk-icon:hover{color:#3a80c1}.ssk-turquoise{background-color:#1abc9c}.ssk-turquoise:hover{background-color:#148f77}.ssk-emerald{background-color:#2ecc71}.ssk-emerald:hover{background-color:#25a25a}.ssk-peter-river{background-color:#3498db}.ssk-peter-river:hover{background-color:#217dbb}.ssk-belize-hole{background-color:#2980b9}.ssk-belize-hole:hover{background-color:#20638f}.ssk-amethyst{background-color:#9b59b6}.ssk-amethyst:hover{background-color:#804399}.ssk-wisteria{background-color:#8e44ad}.ssk-wisteria:hover{background-color:#703688}.ssk-wet-asphalt{background-color:#34495e}.ssk-wet-asphalt:hover{background-color:#222f3d}.ssk-midnight-blue{background-color:#2c3e50}.ssk-midnight-blue:hover{background-color:#1a242f}.ssk-green-sea{background-color:#16a085}.ssk-green-sea:hover{background-color:#107360}.ssk-nephritis{background-color:#27ae60}.ssk-nephritis:hover{background-color:#1e8449}.ssk-sunflower{background-color:#f1c40f}.ssk-sunflower:hover{background-color:#c29d0b}.ssk-orange{background-color:#f39c12}.ssk-orange:hover{background-color:#c87f0a}.ssk-carrot{background-color:#e67e22}.ssk-carrot:hover{background-color:#bf6516}.ssk-pumpkin{background-color:#d35400}.ssk-pumpkin:hover{background-color:#a04000}.ssk-alizarin{background-color:#e74c3c}.ssk-alizarin:hover{background-color:#d62c1a}.ssk-pomegranate{background-color:#c0392b}.ssk-pomegranate:hover{background-color:#962d22}.ssk-clouds{background-color:#cfd9db}.ssk-clouds:hover{background-color:#b1c2c6}.ssk-concrete{background-color:#95a5a6}.ssk-concrete:hover{background-color:#798d8f}.ssk-silver{background-color:#bdc3c7}.ssk-silver:hover{background-color:#a1aab0}.ssk-asbestos{background-color:#7f8c8d}.ssk-asbestos:hover{background-color:#667273}.ssk-dark-gray{background-color:#555}.ssk-dark-gray:hover{background-color:#3b3b3b}.ssk-black{background-color:#333}.ssk-black:hover{background-color:#1a1a1a}
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    a {
+    color: #527fc1f;
+}
+
+a:hover {
+    color: #1a3152;
+}
+
+div.main .content .markdown, div.header .name, div.header nav ul a:hover {
+    color: #181d2a;
+}
+
+div.header nav ul a {
+    color: #6a7a8b;
+}
+
+div.main .content .markdown code {
+    background-color: #f9f9f9;
+    color: #527fc1f;
+}
+
+div.main .content .markdown pre, div.main .content .markdown pre code {
+    background-color: #282a36;
+    color: #87a5d2;
+}
+
+.hljs, .hljs-subst, .hljs-variable {
+    color: #87a5d2;
+}
+
+.hljs-type {
+    color: #97d28b;
+}
+
+.hljs-quote {
+    color: #ffcb8d;
+}
+
+.hljs-string, .hljs-number, .hljs-selector-id, .hljs-selector-class, .hljs-template-tag, .hljs-deletion {
+    color: #96c2d7;
+}
+
+.hljs-comment {
+    color: #6a7a8b;
+}
+
+.hljs-regexp, .hljs-symbol, .hljs-template-variable {
+    color: #ffcb8d;
+}
+
+.hljs-keyword, .hljs-attribute, .hljs-meta-keyword, .hljs-doctag, .hljs-name {
+    color: #97d28b;
+}
+
+.hljs-link, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-title, .hljs-section {
+    color: #ff8e91;
+}
+
+.hljs-built_in, .hljs-bullet, .hljs-code, .hljs-addition {
+    color: #97d28b;
+}
+
+.ssk {
+    background-color: #6a7a8b;
+}
+
+  </style>
+
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://cloud-design.dev/img/logo.png"
+
+>
+
+
+
+
+</head>
+
+
+<body>
+
+
+<div class="header column">
+
+    <div class="container">
+        
+        <a href="https://cloud-design.dev/"><img class="logo" src="https://cloud-design.dev/img/logo.png" alt="logo"></a>
+        
+        <div class="content">
+            <a href="https://cloud-design.dev/"><div class="name"><h1>Cloud Design Dev</h1></div></a>
+            <nav>
+                <ul>
+                    
+                    
+                        
+                            
+                            <li><a href="https://cloud-design.dev/post">post</a></li>
+                            
+                        
+                    
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="main column">
+    <div class="container">
+        <div class="content">
+            <div class="page-heading">
+
+    
+    Testing
+    
+
+</div>
+
+            <div class="markdown">
+                
+    
+    
+
+<h2 id="overview">Overview</h2>
+
+<p>Today I will be showing you how to get up and running with deploying a simple web application backed by a hosted IBM Cloud service. I will be utilizing the IBM Cloud CLI and will show a few different deployment options.</p>
+
+<!--description-->
+
+<h2 id="target-audience">Target audience</h2>
+
+<p>This guide is really aimed at folks that have dabbled with command line and maybe even done a bit of light programming work but are unfamiliar with deploying applications to the IBM Cloud.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+<li>An IBM Cloud Account</li>
+<li>Access to Linux or macOS terminal</li>
+<li>Docker installed. You can find the appropriate instructions for your Operating System <a href="https://docs.docker.com/install/">here</a>.</li>
+</ul>
+
+<h3 id="installing-cli">Installing CLI</h3>
+
+<p>You have a few options for how you would like to install the IBM Cloud CLI:</p>
+
+<ol>
+<li>Run the one-line installer. This will also install some IBM Cloud Plugins as well as tools to interact with Kubernetes and Docker. See <a href="https://cloud.ibm.com/docs/cli/index.html#overview">here</a>{:target=&rdquo;_blank&rdquo;} for the full list of installed components. Piping to bash is controversial, as it prevents you from reading code that is about to run on your system. Therefore, we provide these alternative installation methods:</li>
+<li>Download and install the <a href="https://cloud.ibm.com/docs/cli/reference/ibmcloud/all_versions.html#ibm-cloud-cli-releases">binary version</a>{:target=&rdquo;_blank&rdquo;}. If you&rsquo;re comfortable unziping files and understand how to move binaries in to your PATH then this is the option for you.</li>
+<li>Use <a href="https://github.com/l2fprod/bxshell">bxshell</a>{:target=&rdquo;_blank&rdquo;} which is run as a local Docker container that has the CLI and tools baked in. Pretty handy for kicking the tires.</li>
+</ol>
+
+<h3 id="installing-plugins">Installing plugins</h3>
+
+<p>To install the plugins needed for this tutorial we will use the <code>ibmcloud plugin</code> subcommand. You can see all the plugins available by running the command <code>ibmcloud plugin repo-plugins -r 'IBM Cloud'</code>.  If you choose option 1 in the previous step you should have most of the plugins needed to follow along with this tutorial but it won&rsquo;t hurt to run these commands to ensure they are installed and up to date.</p>
+
+<p>{% highlight shell %}
+$ ibmcloud plugin install dev -r &lsquo;IBM Cloud&rsquo;
+$ ibmcloud plugin install container-service/kubernetes-service -r &lsquo;IBM Cloud&rsquo;
+$ ibmcloud plugin install container-registry -r &lsquo;IBM Cloud&rsquo;
+$ ibmcloud plugin install logging-cli -r &lsquo;IBM Cloud&rsquo;
+{% endhighlight %}</p>
+
+<p>With the CLI and plugins installed we can move on to logging in to the CLI and getting our environment configured.</p>
+
+<h3 id="cli-authentication">CLI Authentication</h3>
+
+<p>It is not considered best practice to log in to the CLI using your IBMid username and password, so we will invoke the <code>--sso</code> option which will open a browser window for account log in. Once you have logged in to the account via the browser you will be redirected to a page that has a one-time passcode to use for authentication.</p>
+
+<p>{% highlight shell %}
+$ ibmcloud login &ndash;sso
+API endpoint: <a href="https://api.ng.bluemix.net">https://api.ng.bluemix.net</a></p>
+
+<p>Get One Time Code from <a href="https://iam-id-2.eu-gb.bluemix.net/identity/passcode">https://iam-id-2.eu-gb.bluemix.net/identity/passcode</a> to proceed.
+Open the URL in the default browser? [Y/n]&gt;Y
+{% endhighlight %}</p>
+
+<p><img src="https://dsc.cloud/quickshare/GUI-Loginv2.png" alt="IBM Cloud Login page" /></p>
+
+<p><img src="https://dsc.cloud/quickshare/onetimepass.png" alt="One Time Passcode" /></p>
+
+<p>Once we&rsquo;ve got the code we hop back to the terminal and complete the log in process.</p>
+
+<p>{% highlight shell %}
+One Time Code &gt; xxxxxx
+Authenticating&hellip;
+OK</p>
+
+<p>Targeted account Ryan Tiffany&rsquo;s Account (xxxxxxxxxxxxxxx) &lt;-&gt; xxxxxxx</p>
+
+<p>Targeted resource group default</p>
+
+<p>API endpoint:      <a href="https://api.ng.bluemix.net">https://api.ng.bluemix.net</a>
+Region:            us-south
+User:              ryan@example.com
+Account:           Ryan Tiffany&rsquo;s Account (xxxxxxxxxxxxxxx) &lt;-&gt; xxxxxxx
+Resource group:    default
+CF API endpoint:
+Org:
+Space:</p>
+
+<p>(output output output)
+{% endhighlight %}</p>
+
+<h3 id="generating-an-api-key">Generating an API Key</h3>
+
+<p>Since we&rsquo;ve already touched on not wanting to use IBMid and password for authentication with the CLI, and generating a one-time passcode is not always practical (headless server for instance), we can create an API key that will be used for authentication instead.</p>
+
+<p>{% highlight shell %}
+$ ibmcloud iam api-key-create <KEY-NAME> -d &ldquo;Key Description&rdquo;
+{% endhighlight %}</p>
+
+<p>You will need to copy and paste the key somewhere safe as it will not be displayed again.</p>
+
+<h4 id="set-environmental-variable">Set environmental variable</h4>
+
+<p>{% highlight shell %}
+export IBMCLOUD_API_KEY=&rsquo;<key copied from previous step>&lsquo;
+{% endhighlight %}</p>
+
+<h4 id="setting-resource-group-region-and-space">Setting Resource group, Region, and Space</h4>
+
+<p>You can target specific pieces of your IBM Cloud environment during the login process using the IBM Cloud CLI. For instance on my account I want to target the <code>Tinylab</code> Organization and under that the Resource Group <code>default</code> and the Space <code>dev</code> in the US-South region:</p>
+
+<p>{% highlight shell %}
+$ ibmcloud target &ndash;cf -o TheTinylab -s dev</p>
+
+<p>Targeted Cloud Foundry (<a href="https://api.ng.bluemix.net">https://api.ng.bluemix.net</a>)
+Targeted org TheTinylab
+Targeted space Dev
+(output output output)
+{% endhighlight %}</p>
+
+<h2 id="creating-a-starter-application-using-the-ibm-cloud-cli-dev-plugin">Creating a starter application using the IBM Cloud CLI Dev plugin</h2>
+
+<p>Now that we&rsquo;re logged in and ready to get up and running we&rsquo;ll invoke the <code>ibmcloud dev create</code> command to walk us through the process of creating our Web app. In this guide we won&rsquo;t be setting up a DevOps toolchain deployment so select <code>3</code> when prompted about deployment options.</p>
+
+<p><a href="https://asciinema.org/a/216612" target="_blank"><img src="https://asciinema.org/a/216612.svg" /></a></p>
+
+<h3 id="building-and-testing-our-starter-application">Building and testing our starter application</h3>
+
+<p>As you can see in the video above, the <code>dev</code> tool created our application code, bound an IBM Cloud service (in this case Cloudant), and downloaded the code to our local directory. If you created an application via the GUI you can invoke the command <code>ibmcloud dev code &lt;name of app&gt;</code> to download the code in to your current directory.</p>
+
+<p>With the code now on our machine we can build our application and test it locally using the build and run subcommands:</p>
+
+<h5 id="building">Building</h5>
+
+<p>{% highlight shell %}
+$ cd ~/rtgoappv3
+$ ibmcloud dev build</p>
+
+<p>Getting service credentials for the application.
+OK
+Validating Docker image name
+OK
+Checking if Docker container rtgoappv3-go-tools is running
+OK
+Checking Docker image history to see if image already exists
+OK
+Creating image rtgoappv3-go-tools based on Dockerfile-tools &hellip;
+Image will have user ryan with id 1001 added</p>
+
+<p>Executing docker image build &ndash;file Dockerfile-tools &ndash;tag rtgoappv3-go-tools &ndash;rm &ndash;pull &ndash;build-arg bx_dev_userid=1001 &ndash;build-arg bx_dev_user=ryan .</p>
+
+<p>OK
+Creating a container named &lsquo;rtgoappv3-go-tools&rsquo; from that image&hellip;
+OK
+Starting the &lsquo;rtgoappv3-go-tools&rsquo; container&hellip;
+OK
+OK
+Stopping the &lsquo;rtgoappv3-go-tools&rsquo; container&hellip;
+OK
+{% endhighlight %}</p>
+
+<h4 id="running-locally">Running Locally</h4>
+
+<p>{% highlight shell %}
+$ ibmcloud dev run</p>
+
+<p>The run-cmd option was not specified
+Stopping the &lsquo;rtgoappv3-go-run&rsquo; container&hellip;
+The &lsquo;rtgoappv3-go-run&rsquo; container was not found
+Validating Docker image name
+Binding IP and ports for Docker image.
+OK
+Checking if Docker container rtgoappv3-go-run is running
+OK
+Checking Docker image history to see if image already exists
+OK
+Creating image rtgoappv3-go-run based on Dockerfile &hellip;</p>
+
+<p>Executing docker image build &ndash;file Dockerfile &ndash;tag rtgoappv3-go-run &ndash;rm &ndash;pull .</p>
+
+<p>OK
+Creating a container named &lsquo;rtgoappv3-go-run&rsquo; from that image&hellip;
+Waiting for Docker image to build ⠚ OK
+Starting the &lsquo;rtgoappv3-go-run&rsquo; container&hellip;
+OK
+{% endhighlight %}</p>
+
+<p>From another terminal session we can curl our local application and should see the console return logging information:</p>
+
+<p>{% highlight shell %}
+$ curl -I localhost:8080</p>
+
+<p>Logs for the rtgoappv3-go-run container:
+{&ldquo;level&rdquo;:&ldquo;info&rdquo;,&ldquo;msg&rdquo;:&ldquo;Starting rtgoappv3 on port :8080&rdquo;,&ldquo;time&rdquo;:&ldquo;2018-12-12T17:07:40Z&rdquo;}
+[GIN] 2018/12/12 - 17:08:13 | 200 |     1.19781ms |      172.17.0.1 |  HEAD     /
+[GIN] 2018/12/12 - 17:08:20 | 200 |     210.292µs |      172.17.0.1 |  HEAD     /
+[GIN] 2018/12/12 - 17:08:20 | 200 |     204.505µs |      172.17.0.1 |  HEAD     /
+{% endhighlight %}</p>
+
+<p>If your <code>dev build</code> or <code>dev run</code> commands fail, check out some common errors and how to <a href="https://cloud.ibm.com/docs/cli/ts_createapps.html#troubleshoot">troubleshoot them</a>.</p>
+
+<h3 id="cloud-foundry-deployment">Cloud Foundry Deployment</h3>
+
+<p>With our simple application tested and built we can now move on to deployment. By default when you invoke <code>ibmcloud dev deploy</code> the application will be deployed using Cloud Foundry.</p>
+
+<p>{% highlight shell %}
+$ ibmcloud dev deploy
+The hostname for this application will be: rtgoappv3
+? Press [Return] to accept this, or enter a new value now&gt;</p>
+
+<p>Provisioning user-defined Cloud Foundry service(s)&hellip; ⠂
+Executing ibmcloud cf cups Cloudant-rt -p {<REDACTED>}</p>
+
+<p>Deploying to Cloud Foundry&hellip;</p>
+
+<p>Executing ibmcloud cf push</p>
+
+<p>Invoking &lsquo;cf push&rsquo;&hellip;</p>
+
+<p>Pushing from manifest to org TheTinylab / space Dev as ryan@example.com&hellip;
+Using manifest file /home/ryan/rtgoappv3/manifest.yml
+Using manifest file /home/ryan/rtgoappv3/manifest.yml</p>
+
+<p>Creating app rtgoappv3 in org TheTinylab / space Dev as ryan@example.com&hellip;
+OK</p>
+
+<p>Creating route rtgoappv3.mybluemix.net&hellip;
+OK</p>
+
+<p>Binding rtgoappv3.mybluemix.net to rtgoappv3&hellip;
+OK</p>
+
+<p>App started
+OK</p>
+
+<p>App rtgoappv3 was started using this command <code>./bin/rtgoappv3</code></p>
+
+<p>Showing health and status for app rtgoappv3 in org TheTinylab / space Dev as ryan@cdetest.info&hellip;
+OK</p>
+
+<p>requested state: started
+instances: <sup>1</sup>&frasl;<sub>1</sub>
+usage: 256M x 1 instances
+urls: rtgoappv3.mybluemix.net
+last uploaded: Wed Dec 12 17:11:30 UTC 2018
+stack: cflinuxfs2
+buildpack: <a href="https://github.com/cloudfoundry/go-buildpack.git#v1.8.25">https://github.com/cloudfoundry/go-buildpack.git#v1.8.25</a></p>
+
+<pre><code> state     since                    cpu    memory      disk      details
+</code></pre>
+
+<p>#0   running   2018-12-12 05:13:17 PM   0.0%   0 of 256M   0 of 1G</p>
+
+<p>OK
+Your application is hosted at <a href="http://rtgoappv3.mybluemix.net/">http://rtgoappv3.mybluemix.net/</a>
+{% endhighlight %}</p>
+
+<h3 id="kubernetes-deployment">Kubernetes Deployment</h3>
+
+<p>To deploy your application on Kubernetes, you must either specify the deploy-target as <code>container</code> in the cli-config.yml or use the parameter <code>-t container</code> when invoking <code>ibmcloud dev deploy</code>. If you specify the deploy target in the cli-config.yml file you will also need to add some additional options in order to ensure you are targeting the correct cluster:</p>
+
+<p>{% highlight shell %}
+    deploy-image-target: &ldquo;registry.<IBM Cloud Region>.bluemix.net/<Container Registry Namespace>/<App-Name>&ldquo;</p>
+
+<pre><code>ibm-cluster: &quot;mycluster&quot;
+</code></pre>
+
+<p>{% endhighlight %}</p>
+
+<p>The Kubernetes deployment uses <a href="https://helm.sh/">Helm Charts</a>. The <code>deploy</code> command will install the server side component <code>tiller</code> by default, but for better security I would recommend creating a Service Account on your Kubernetes cluster for Helm.</p>
+
+<p>{% highlight shell %}
+$ kubectl create -f <a href="https://raw.githubusercontent.com/IBM-Cloud/kube-samples/master/rbac/serviceaccount-tiller.yaml">https://raw.githubusercontent.com/IBM-Cloud/kube-samples/master/rbac/serviceaccount-tiller.yaml</a>
+serviceaccount/tiller created
+clusterrolebinding.rbac.authorization.k8s.io/tiller created</p>
+
+<p>$  helm init &ndash;service-account tiller
+$HELM_HOME has been configured at /home/ryan/.helm.</p>
+
+<p>Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.</p>
+
+<p>Please note: by default, Tiller is deployed with an insecure &lsquo;allow unauthenticated users&rsquo; policy.
+To prevent this, run <code>helm init</code> with the &ndash;tiller-tls-verify flag.
+For more information on securing your installation see: <a href="https://docs.helm.sh/using_helm/#securing-your-helm-installation">https://docs.helm.sh/using_helm/#securing-your-helm-installation</a>
+Happy Helming!
+{% endhighlight %}</p>
+
+<p>{% highlight shell %}
+$ ibmcloud dev deploy -t container</p>
+
+<p>You are currently logged in. Your application will be deployed to the IBM
+Cloud.</p>
+
+<p>The IBM cluster name for the deployment of this application will be:
+iks-rt</p>
+
+<p>? Press [Return] to accept this, or enter a new value now&gt;
+Log in to the IBM Container Registry
+OK
+Configuring with cluster &lsquo;iks-rt&rsquo;
+OK</p>
+
+<p>The container deployment image name for the deployment of this application
+will be: (The image will be tagged by Docker with this base name and appended
+with a version)</p>
+
+<p>registry.ng.bluemix.net/shinyhappynamespace/rtgoappv3
+? Press [Return] to accept this, or enter a new value now&gt;</p>
+
+<p>Executing helm get values rtgoappv3
+Release &ldquo;rtgoappv3&rdquo; does not exist. Installing it now.</p>
+
+<p>NAME:   rtgoappv3
+LAST DEPLOYED: Wed Dec 12 18:41:27 2018
+NAMESPACE: default
+STATUS: DEPLOYED</p>
+
+<p>RESOURCES:
+==&gt; v1/Pod(related)
+NAME                                  READY  STATUS             RESTARTS  AGE
+rtgoappv3-deployment-c85cd7695-zqkjg  0/1    ContainerCreating  0         0s</p>
+
+<p>==&gt; v1/Service</p>
+
+<p>NAME                           AGE
+rtgoappv3-application-service  0s</p>
+
+<p>==&gt; v1beta1/Deployment
+rtgoappv3-deployment  0s
+OK</p>
+
+<p>Pods:
+NAME                                   READY   STATUS              RESTARTS   AGE
+rtgoappv3-deployment-c85cd7695-zqkjg   0/1     ContainerCreating   0          1s</p>
+
+<p>Deployments:
+NAME                   DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+rtgoappv3-deployment   1         1         1            0           1s</p>
+
+<p>Services:
+NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes                      ClusterIP   172.21.0.1       <none>        443/TCP          1h
+rtgoappv3-application-service   NodePort    172.21.209.254   <none>        8080:31617/TCP   1s</p>
+
+<p>Nodes:
+NAME            STATUS   ROLES    AGE   VERSION
+10.209.37.208   Ready    <none>   1h    v1.11.5+IKS
+10.209.37.213   Ready    <none>   1h    v1.11.5+IKS</p>
+
+<p>Untag the Run image from the local Docker registry</p>
+
+<p>Executing docker rmi registry.ng.bluemix.net/shinyhappynamespace/rtgoappv3:0.0.1</p>
+
+<p>OK
+Your application is hosted at <a href="http://169.61.30.194:31617/">http://169.61.30.194:31617/</a>
+{% endhighlight %}</p>
+
+<p><img src="https://dsc.cloud/quickshare/Screenshot_2018-12-12-12.42.20_yYpaj1.png" alt="Simple go app deployed to Kubernetes" /></p>
+
+<h3 id="logging-with-ibm-cloud-log-analysis">Logging with IBM Cloud Log Analysis</h3>
+
+<p>If you don&rsquo;t already have an instance of the <a href="https://cloud.ibm.com/docs/services/CloudLogAnalysis/log_analysis_ov.html#log_analysis_ov">IBM Cloud Log Analysis</a> service you can use the CLI to create one.</p>
+
+<p>{% highlight shell %}
+$ ibmcloud service create ibmLogAnalysis standard logging-rt
+Invoking &lsquo;cf create-service ibmLogAnalysis standard logging-rt&rsquo;&hellip;</p>
+
+<p>Creating service instance logging-rt in org TheTinylab / space Dev as ryan@example.com&hellip;
+OK
+{% endhighlight %}</p>
+
+<p>With the logging service instance now deployed we can now view the logs for our Cloud Foundry application using the CLI or the Kibana dashboard.</p>
+
+<p>{% highlight x %}
+$ ibmcloud cf logs rtgoappv3</p>
+
+<p>Invoking &lsquo;cf logs rtgoappv3&rsquo;&hellip;
+Retrieving logs for app rtgoappv3 in org TheTinylab / space Dev as ryan@example.com&hellip;</p>
+
+<p>2018-12-12T18:50:10.20+0000 [RTR/22] OUT rtgoappv3.mybluemix.net - [2018-12-12T18:50:10.182+0000] &ldquo;GET / HTTP/1.1&rdquo; 200 0 56379 &ldquo;-&rdquo; &ldquo;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:63.0) Gecko/20100101 Firefox/63.0&rdquo; &ldquo;10.184.41.4:57601&rdquo; &ldquo;169.46.115.120:61318&rdquo; x_forwarded_for:&ldquo;76.224.107.167, 10.184.41.4&rdquo; x_forwarded_proto:&ldquo;http&rdquo; vcap_request_id:&ldquo;2286ebf5-41b8-4d0a-7884-0a0704f97937&rdquo; response_time:0.025794918 app_id:&ldquo;f8ae455b-c6e4-4569-a97d-0d442da37548&rdquo; app_index:&ldquo;0&rdquo; x_global_transaction_id:&ldquo;3490874319&rdquo; true_client_ip:&ldquo;-&rdquo; x_b3_traceid:&ldquo;5a8ddd44d94eefec&rdquo; x_b3_spanid:&ldquo;5a8ddd44d94eefec&rdquo; x_b3_parentspanid:&ldquo;-&rdquo;
+   2018-12-12T18:50:10.20+0000 [RTR/22] OUT
+   2018-12-12T18:49:53.77+0000 [APP/PROC/WEB/0] OUT [GIN] 2018/12/12 - 18:49:53 | 200 |    6.342807ms |  76.224.107.167 |  GET     /
+   2018-12-12T18:49:53.90+0000 [RTR/26] OUT rtgoappv3.mybluemix.net - [2018-12-12T18:49:53.885+0000] &ldquo;GET /favicon.ico HTTP/1.1&rdquo; 200 0 32935 &ldquo;-&rdquo; &ldquo;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:63.0) Gecko/20100101 Firefox/63.0&rdquo; &ldquo;10.184.41.4:59952&rdquo; &ldquo;169.46.115.120:61318&rdquo; x_forwarded_for:&ldquo;76.224.107.167, 10.184.41.4&rdquo; x_forwarded_proto:&ldquo;http&rdquo; vcap_request_id:&ldquo;b4816d9f-1e43-42a9-54af-96c1fdc31319&rdquo; response_time:0.018047205 app_id:&ldquo;f8ae455b-c6e4-4569-a97d-0d442da37548&rdquo; app_index:&ldquo;0&rdquo; x_global_transaction_id:&ldquo;2048179073&rdquo; true_client_ip:&ldquo;-&rdquo; x_b3_traceid:&ldquo;3d0dda24beeb7988&rdquo; x_b3_spanid:&ldquo;3d0dda24beeb7988&rdquo; x_b3_parentspanid:&ldquo;-&rdquo;
+{% endhighlight %}</p>
+
+<p><img src="https://dsc.cloud/quickshare/kibana_dashboard.png" alt="" /></p>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="footer column">
+    <div class="container">
+
+        
+
+        <div class="copyright">
+
+        
+            
+                <a href="https://cloud-design.dev/license">Copyright © 2015-2019 Ryan Tiffany</a>
+            
+        
+
+        </div>
+        <div class="icons">
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="https://github.com/greyhoundforty" rel=me target="_blank">
+                <img class="icon" src="https://cloud-design.dev/img/github.svg" alt="github" />
+            </a>
+        
+
+        
+            <a href="https://twitter.com/ryantiffany" rel=me target="_blank">
+                <img class="icon" src="https://cloud-design.dev/img/twitter.svg" alt="twitter" />
+            </a>
+        
+
+        
+            <a href="https://www.linkedin.com/in/john-example-aa80ue8%c3%a8" rel=me target="_blank">
+                <img class="icon" src="https://cloud-design.dev/img/linkedin.svg" alt="linkedin" />
+            </a>
+        
+
+        
+
+        
+
+        
+            <a href="mailto:you@example.com">
+                <img class="icon" src="https://cloud-design.dev/img/email.svg" alt="email" />
+            </a>
+        
+
+        
+            <a href="https://cloud-design.dev/index.xml">
+                <img class="icon" src="https://cloud-design.dev/img/rss.svg" alt="rss" />
+            </a>
+        
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Raleway:400,600,700', 'Merriweather:300,300i,700,700i', 'Ubuntu+Mono:400,700']
+    }
+  });
+</script>
+
+
+
+  <script src="https://cloud-design.dev/js/highlight.min.js" defer></script>
+  
+
+
+
+  <script src="https://cloud-design.dev/js/progressively.min.js" defer></script>
+
+
+
+  <script src="https://cloud-design.dev/js/social-share-kit.min.js" defer></script>
+
+
+
+
+
+
+<script>
+  window.onload = function() {
+    
+      hljs.initHighlighting();
+    
+    
+      progressively.init({delay: 30, throttle: 50});
+    
+    
+      SocialShareKit.init({
+        twitter: {
+            text: '',
+            via: 'ryantiffany'
+        }
+      });
+    
+  };
+</script>
+
+
+
+
+</body>
+</html>
+

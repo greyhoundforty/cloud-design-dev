@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Post on Cloud Design Dev</title>
+    <link>https://cloud-design.dev/post/</link>
+    <description>Recent content in Post on Cloud Design Dev</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 30 Jul 2019 07:20:57 -0500</lastBuildDate>
+    
+	<atom:link href="https://cloud-design.dev/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing</title>
+      <link>https://cloud-design.dev/post/testing/</link>
+      <pubDate>Tue, 30 Jul 2019 07:20:57 -0500</pubDate>
+      
+      <guid>https://cloud-design.dev/post/testing/</guid>
+      <description>Overview Today I will be showing you how to get up and running with deploying a simple web application backed by a hosted IBM Cloud service. I will be utilizing the IBM Cloud CLI and will show a few different deployment options.
+ Target audience This guide is really aimed at folks that have dabbled with command line and maybe even done a bit of light programming work but are unfamiliar with deploying applications to the IBM Cloud.</description>
+    </item>
+    
+  </channel>
+</rss>
